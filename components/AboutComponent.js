@@ -30,7 +30,7 @@ class About extends Component{
     render() {
          const { navigate } = this.props.navigation;
 
-        const renderMenuItem = ({item, index}) => {
+        const renderLeaders = ({item, index}) => {
 
             return (
               <ListItem
@@ -46,12 +46,13 @@ class About extends Component{
          <ScrollView>
 
             <History/>
-            <FlatList            
-                style={{margin: 10 }}
-                data={this.state.leaders}
-                renderItem={renderMenuItem}
-                keyExtractor={item => item.id.toString()}
-                />
+			<Card title="Corporate Leadership">
+					<FlatList
+						data={this.state.leaders}
+						renderItem={renderLeaders}
+						keyExtractor={(item) => item.id.toString()}
+					/>
+				</Card>
 
         </ScrollView>
         );
