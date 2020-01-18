@@ -32,7 +32,7 @@ export const addComments = (comments) => ({
 });
 
 export const fetchDishes = () => (dispatch) => {
-
+    
     dispatch(dishesLoading());
 
     return fetch(baseUrl + 'dishes')

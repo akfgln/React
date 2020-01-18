@@ -6,6 +6,7 @@ import { baseUrl } from '../shared/baseUrl';
 import { postFavorite, postComment } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
+    debugger;
     return {
       dishes: state.dishes,
       comments: state.comments,
