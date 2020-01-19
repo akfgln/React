@@ -31,6 +31,25 @@ export const addComments = (comments) => ({
     payload: comments
 });
 
+export const postComment = (dishId, rating, author, commentText)  => (dispatch) => {
+    setTimeout(() => {
+        var date = new Date();
+        var comment = {
+            dishId: dishId,
+            rating: rating,
+            author: author,
+            comment: commentText,
+            date: date
+        };
+        dispatch(addComment(comment));
+    }, 2000);
+};
+
+export const addComment = (comment) => ({
+    type: ActionTypes.ADD_COMMENT,
+    payload: comment
+});
+
 export const fetchDishes = () => (dispatch) => {
     
     dispatch(dishesLoading());
@@ -153,21 +172,7 @@ export const addFavorite = (dishId) => ({
     payload: dishId
 });
 
-export const postComment = (dishId, rating, author, commentText)  => (dispatch) => {
-    setTimeout(() => {
-        var date = new Date();
-        var comment = {
-            dishId: dishId,
-            rating: rating,
-            author: author,
-            comment: commentText,
-            date: date
-        };
-        dispatch(addComment(comment));
-    }, 2000);
-};
-
-export const addComment = (comment) => ({
-    type: ActionTypes.ADD_COMMENT,
-    payload: comment
-});
+export const deleteFavorite = (dishId) => ({
+    type: ActionTypes.DELETE_FAVORITE,
+    payload: dishId
+});  
