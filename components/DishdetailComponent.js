@@ -7,7 +7,6 @@ import { postFavorite, postComment } from '../redux/ActionCreators';
 import * as Animatable from 'react-native-animatable';
 
 const mapStateToProps = state => {
-    debugger;
     return {
       dishes: state.dishes,
       comments: state.comments,
@@ -33,6 +32,14 @@ function RenderDish(props) {
             return false;
     }
 
+    const recognizeComment = ({ moveX, moveY, dx, dy }) => {
+        debugger;
+        if ( dx > 200 )
+            return true;
+        else
+            return false;
+    }
+
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: (e, gestureState) => {
             return true;
@@ -50,6 +57,8 @@ function RenderDish(props) {
                     ],
                     { cancelable: false }
                 );
+            if (recognizeComment(gestureState))
+                props.toggleModal();
 
             return true;
         }
