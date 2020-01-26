@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Image, Alert } from 'react-native';
 import { Input, CheckBox, Button, Icon } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -155,6 +155,28 @@ class RegisterTab extends Component {
 
     }
 
+    getImageFromGalery = async () => {  
+        let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+        if (permissionResult.granted === false) {
+          alert('Permission to access camera roll is required!');
+          return;
+        }
+    
+        let pickerImage = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3]
+        });
+        if (pickerImage.cancelled === true) {
+          return;
+        }
+        if (!pickerImage.cancelled) {
+            console.log(pickerImage);
+            this.processImage(pickerImage.uri);
+        }
+
+    }
+
     processImage = async (imageUri) => {
         let processedImage = await ImageManipulator.manipulateAsync(
             imageUri, 
@@ -196,10 +218,18 @@ class RegisterTab extends Component {
                         loadingIndicatorSource={require('./images/logo.png')}
                         style={styles.image} 
                         />
-                    <Button
-                        title="Camera"
-                        onPress={this.getImageFromCamera}
-                        />
+                    <View style={styles.buttonCamera}>
+                        <Button
+                            title="Camera"
+                            onPress={this.getImageFromCamera}
+                            />
+                    </View>
+                    <View style={styles.buttonGalery}>
+                        <Button
+                            title="Galery"
+                            onPress={this.getImageFromGalery}
+                            />
+                    </View>
                 </View>
                 <Input
                     placeholder="Username"
@@ -279,6 +309,14 @@ const styles = StyleSheet.create({
       margin: 10,
       width: 80,
       height: 60
+    },
+    buttonCamera: {
+        justifyContent: 'center',
+        margin: 20,
+    },
+    buttonGalery: {
+        justifyContent: 'center',
+        margin: 20,
     },
     formInput: {
         margin: 20
